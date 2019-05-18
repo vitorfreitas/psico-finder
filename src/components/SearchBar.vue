@@ -1,6 +1,12 @@
 <template>
   <div class="input__wrapper">
-    <input type="text" class="input__text" placeholder="Digite sua cidade...">
+    <input
+      @input="($event) => handleInputChange($event)"
+      autofocus
+      type="text"
+      class="input__text"
+      placeholder="Digite sua cidade..."
+    >
     <a href="#" class="input__btn">
       Buscar
       <img src="../assets/search.png" alt="Magnifying Glass" class="input__btn__icon">
@@ -9,7 +15,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    handleInputChange(ev) {
+      const { value } = ev.target;
+      this.$emit("input", { value });
+    }
+  }
+};
 </script>
 
 <style scoped>

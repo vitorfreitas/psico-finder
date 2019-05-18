@@ -5,7 +5,7 @@
       <source src="../assets/people.mp4" type="video/mp4">
     </video>
 
-    <header class="main__header">
+    <header class="main__header" :class="{'main__header--disappear' : searchbarTyping}">
       <img src="http://basicfunction.com/til/images/brain.png" alt="Brain" class="main__logo">
       <h1 class="main__title">
         <span class="main__title--bold">Psico</span>finder
@@ -13,7 +13,7 @@
       <p class="main__slogan">Procure psicologos perto de você!</p>
     </header>
 
-    <SearchBar/>
+    <SearchBar @input="handleSearchBarInput"/>
   </section>
 </template>
 
@@ -23,6 +23,16 @@ import SearchBar from "../components/SearchBar.vue";
 export default {
   components: {
     SearchBar: SearchBar
+  },
+  data() {
+    return {
+      searchbarTyping: false
+    };
+  },
+  methods: {
+    handleSearchBarInput({ value }) {
+      this.searchbarTyping = value.length !== 0;
+    }
   }
 };
 </script>
@@ -37,8 +47,8 @@ export default {
   top: 0;
   left: 0;
   z-index: 2;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
 }
@@ -55,6 +65,16 @@ export default {
   margin-bottom: 4rem;
   flex-direction: column;
   align-items: center;
+
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.main__header--disappear {
+  z-index: 4;
+  opacity: 0;
+  margin-bottom: -20rem;
+  transform: translateY(-10rem);
 }
 
 .main__header > * {
@@ -81,5 +101,17 @@ export default {
   color: #eee;
   font-size: 2rem;
   font-family: "Lato";
+}
+
+@keyframes disappearToTop {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 </style>
