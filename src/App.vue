@@ -22,7 +22,7 @@ export default {
 }
 
 html {
-  font-family: Arial;
+  font-family: "Ubuntu", Arial;
   font-size: 62.5%;
 }
 

@@ -25,6 +25,11 @@ export default {};
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+.input__wrapper,
+.input__wrapper > * {
+  z-index: 3;
+}
+
 .input__text {
   border: 0;
   width: 100%;
@@ -34,7 +39,7 @@ export default {};
 }
 
 .input__text::placeholder {
-  color: #c1c1c1;
+  color: #c0c0c0;
 }
 
 .input__text:focus {
