@@ -29,7 +29,7 @@ export default {
 .input__wrapper {
   width: 50%;
   min-width: 35rem;
-  transition: all 0.3s;
+  transition: all 0.2s;
 
   display: flex;
   margin: 0 auto;
