@@ -7,7 +7,8 @@ Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyB6wx8Fg4mgLQiMMVYPRXVo14GAni5nS3E",
-    libraries: "places"
+    libraries: "places",
+    language: "pt"
   }
 });
 

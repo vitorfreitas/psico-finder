@@ -1,12 +1,13 @@
 <template>
   <div class="input__wrapper">
-    <input
+    <GmapAutocomplete
       @input="($event) => handleInputChange($event)"
+      @place_changed="handlePlaceChange"
       autofocus
       type="text"
       class="input__text"
       placeholder="Digite sua cidade..."
-    >
+    ></GmapAutocomplete>
     <a href="#" class="input__btn">
       Buscar
       <img src="../assets/search.png" alt="Magnifying Glass" class="input__btn__icon">
@@ -20,6 +21,12 @@ export default {
     handleInputChange(ev) {
       const { value } = ev.target;
       this.$emit("input", { value });
+    },
+    handlePlaceChange(place) {
+      const { location } = place.geometry;
+      const lat = location.lat();
+      const lng = location.lng();
+      this.$emit("place_changed", { lat, lng });
     }
   }
 };

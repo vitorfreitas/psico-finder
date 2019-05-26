@@ -13,7 +13,7 @@
       <p class="main__slogan">Procure psicologos perto de você!</p>
     </header>
 
-    <SearchBar @input="handleSearchBarInput"/>
+    <SearchBar @input="handleSearchBarInput" @place_changed="handlePlaceChange"/>
 
     <GmapMap :center="center" :zoom="18" class="map" :class="{'map--visible' : searchbarTyping}"></GmapMap>
   </section>
@@ -33,6 +33,9 @@ export default {
   methods: {
     handleSearchBarInput({ value }) {
       this.searchbarTyping = value.length !== 0;
+    },
+    handlePlaceChange(place) {
+      this.center = place;
     }
   },
   mounted() {
