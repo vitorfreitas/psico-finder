@@ -136,6 +136,12 @@ export default {
   visibility: visible;
 }
 
+@media only screen and (max-width: 889px) {
+  .map {
+    width: 90vw;
+  }
+}
+
 @keyframes disappearToTop {
   0% {
     opacity: 1;
