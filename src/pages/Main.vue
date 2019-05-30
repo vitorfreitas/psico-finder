@@ -15,18 +15,19 @@
 
     <SearchBar @input="handleSearchBarInput" @place_changed="handlePlaceChange"/>
 
-    <GmapMap :center="center" :zoom="18" class="map" :class="{'map--visible' : searchbarTyping}"></GmapMap>
+    <Map :visible="searchbarTyping" :place="place" @center="handlePlaceChange"/>
   </section>
 </template>
 
 <script>
 import SearchBar from "../components/SearchBar.vue";
+import Map from "../components/Map.vue";
 
 export default {
-  components: { SearchBar },
+  components: { SearchBar, Map },
   data() {
     return {
-      center: { lat: 0, lng: 0 },
+      place: null,
       searchbarTyping: false
     };
   },
@@ -34,21 +35,9 @@ export default {
     handleSearchBarInput({ value }) {
       this.searchbarTyping = value.length !== 0;
     },
-    handlePlaceChange(place) {
-      this.center = place;
+    handlePlaceChange({ lat, lng }) {
+      this.place = { lat, lng };
     }
-  },
-  mounted() {
-    navigator.geolocation.getCurrentPosition(position => {
-      const {
-        coords: { latitude, longitude }
-      } = position;
-
-      this.center = {
-        lat: latitude,
-        lng: longitude
-      };
-    });
   }
 };
 </script>
@@ -117,29 +106,6 @@ export default {
   color: #eee;
   font-size: 2rem;
   font-family: "Lato";
-}
-
-.map {
-  opacity: 0;
-  z-index: 40;
-  width: 80rem;
-  height: 0rem;
-  visibility: hidden;
-  transition: all 0.2s;
-  margin: 10rem auto 0;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-
-.map--visible {
-  height: 40rem;
-  opacity: 1;
-  visibility: visible;
-}
-
-@media only screen and (max-width: 889px) {
-  .map {
-    width: 90vw;
-  }
 }
 
 @keyframes disappearToTop {
