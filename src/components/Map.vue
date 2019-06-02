@@ -5,20 +5,24 @@
     class="map"
     :class="{'map--visible' : visible}"
   >
-    <GmapMarker
+    <GmapCustomMarker
       :key="index"
       v-for="(m, index) in markers"
-      :position="{lat: m.latitude, lng: m.longitude}"
-      @click="handleMarkerClick({lat: m.latitude, lng: m.longitude})"
-    />
+      :marker="{lat: m.latitude, lng: m.longitude}"
+      @click.native="handleMarkerClick({lat: m.latitude, lng: m.longitude})"
+    >
+      <img src="../assets/bubble.png" alt="Conversation bubble" class="map__marker">
+    </GmapCustomMarker>
   </GmapMap>
 </template>
 
 <script>
+import GmapCustomMarker from "vue2-gmap-custom-marker";
 import firebase from "firebase";
 import "firebase/firestore";
 
 export default {
+  components: { GmapCustomMarker },
   props: ["visible", "place"],
   data() {
     return {
@@ -68,6 +72,12 @@ export default {
   height: 40rem;
   opacity: 1;
   visibility: visible;
+}
+
+.map__marker {
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 889px) {
