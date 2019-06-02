@@ -79,6 +79,7 @@ export default {
   z-index: 4;
   opacity: 0;
   margin-bottom: -20rem;
+  visibility: hidden !important;
   transform: translateY(-10rem);
 }
 
