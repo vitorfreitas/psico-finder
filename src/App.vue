@@ -6,9 +6,7 @@
 import Main from "./pages/Main.vue";
 
 export default {
-  components: {
-    Main: Main
-  }
+  components: { Main }
 };
 </script>
 

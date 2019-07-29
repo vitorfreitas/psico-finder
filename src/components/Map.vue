@@ -1,17 +1,25 @@
 <template>
   <GmapMap
     :center="place ? place : center"
-    :zoom="18"
+    :zoom="15"
     class="map"
     :class="{'map--visible' : visible}"
+    :options="{disableDefaultUI: true, clickableIcons: false}"
   >
     <GmapCustomMarker
       :key="index"
       v-for="(m, index) in markers"
       :marker="{lat: m.latitude, lng: m.longitude}"
-      @click.native="handleMarkerClick({lat: m.latitude, lng: m.longitude})"
+      @click.native="handleMarkerClick(m, index)"
     >
       <img src="../assets/bubble.png" alt="Conversation bubble" class="map__marker">
+      <gmap-info-window
+        :position="{lat: m.latitude, lng: m.longitude}"
+        :opened="markerOpenIndex === index"
+        @closeclick="markerOpenIndex=null"
+      >
+        <PsycologistDialog :data="m"></PsycologistDialog>
+      </gmap-info-window>
     </GmapCustomMarker>
   </GmapMap>
 </template>
@@ -20,12 +28,14 @@
 import GmapCustomMarker from "vue2-gmap-custom-marker";
 import firebase from "firebase";
 import "firebase/firestore";
+import PsycologistDialog from "../components/PsychologistDialog.vue";
 
 export default {
-  components: { GmapCustomMarker },
+  components: { GmapCustomMarker, PsycologistDialog },
   props: ["visible", "place"],
   data() {
     return {
+      markerOpenIndex: null,
       center: { lat: 0, lng: 0 },
       markers: []
     };
@@ -49,8 +59,14 @@ export default {
     });
   },
   methods: {
-    handleMarkerClick({ lat, lng }) {
-      this.$emit("center", { lat, lng });
+    handleMarkerClick(marker, index) {
+      const position = {
+        lat: marker.latitude,
+        lng: marker.longitude
+      };
+
+      this.markerOpenIndex = index;
+      this.$emit("center", marker);
     }
   }
 };

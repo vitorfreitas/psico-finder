@@ -15,7 +15,7 @@
 
     <SearchBar @input="handleSearchBarInput" @place_changed="handlePlaceChange"/>
 
-    <Map :visible="searchbarTyping" :place="place" @center="handlePlaceChange"/>
+    <Map :visible="searchbarTyping" :place="place" @center="handleMarkerClick"/>
   </section>
 </template>
 
@@ -36,6 +36,10 @@ export default {
       this.searchbarTyping = value.length !== 0;
     },
     handlePlaceChange({ lat, lng }) {
+      this.place = { lat, lng };
+    },
+    handleMarkerClick(marker) {
+      const { lat, lng } = marker;
       this.place = { lat, lng };
     }
   }
