@@ -1,6 +1,13 @@
 <template>
   <div class="input__wrapper">
-    <input type="text" class="input__text" placeholder="Digite sua cidade...">
+    <GmapAutocomplete
+      @input="($event) => handleInputChange($event)"
+      @place_changed="handlePlaceChange"
+      autofocus
+      type="text"
+      class="input__text"
+      placeholder="Digite sua cidade..."
+    ></GmapAutocomplete>
     <a href="#" class="input__btn">
       Buscar
       <img src="../assets/search.png" alt="Magnifying Glass" class="input__btn__icon">
@@ -9,20 +16,38 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    handleInputChange(ev) {
+      const { value } = ev.target;
+      this.$emit("input", { value });
+    },
+    handlePlaceChange(place) {
+      const { location } = place.geometry;
+      const lat = location.lat();
+      const lng = location.lng();
+      this.$emit("place_changed", { lat, lng });
+    }
+  }
+};
 </script>
 
 <style scoped>
 .input__wrapper {
   width: 50%;
   min-width: 35rem;
-  transition: all 0.3s;
+  transition: all 0.2s;
 
   display: flex;
   margin: 0 auto;
   align-items: center;
   justify-content: center;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.input__wrapper,
+.input__wrapper > * {
+  z-index: 3;
 }
 
 .input__text {
@@ -34,7 +59,7 @@ export default {};
 }
 
 .input__text::placeholder {
-  color: #c1c1c1;
+  color: #c0c0c0;
 }
 
 .input__text:focus {

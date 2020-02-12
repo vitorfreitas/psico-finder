@@ -6,9 +6,7 @@
 import Main from "./pages/Main.vue";
 
 export default {
-  components: {
-    Main: Main
-  }
+  components: { Main }
 };
 </script>
 
@@ -22,7 +20,7 @@ export default {
 }
 
 html {
-  font-family: Arial;
+  font-family: "Ubuntu", Arial;
   font-size: 62.5%;
 }
 
